@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Titles</title>
+    <!-- Add Bootstrap for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>SG Library</span>
+                    </h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">
+                                Book Titles
+                            </a>
+                        </li>
+                    </ul>
+                    <img src="https://library.suss.edu.sg/wp-content/uploads/2023/11/Study-Space_High-table-2-cropped-300x200.png" class="img-fluid p-3" alt="SUSS Library">
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">BOOK TITLES</h1>
+                    <div class="d-flex align-items-center">
+                        <span class="me-3">Number of titles: {{ books|length }}</span>
+                        <form class="d-flex">
+                            <label for="category" class="col-form-label me-2">Category:</label>
+                            <select class="form-select me-2" id="category">
+                                <option selected>All</option>
+                                <option value="Children">Children</option>
+                                <option value="Teens">Teens</option>
+                                <option value="Adult">Adult</option>
+                            </select>
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Book List -->
+                {% for book in books %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <!-- Corrected key for image source is 'url' -->
+                            <img src="{{ book.url }}" class="img-fluid rounded-start" alt="Cover of {{ book.title }}">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.title }}</h5>
+                                <!-- Use the 'join' filter to display the list of authors -->
+                                <p class="card-text"><small class="text-muted">By {{ book.authors|join(', ') }}</small></p>
+                                <!-- The 'category' is a single string. The 'genres' is a list. The example shows genres. -->
+                                <p class="card-text">Category: {{ book.genres|join(', ') }}<br>Pages: {{ book.pages }}</p>
+                                <!-- Use the 'display_description' we created in app.py -->
+                                <p class="card-text">{{ book.display_description }}</p>
+                                <a href="#" class="btn btn-primary">More details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </main>
+        </div>
+    </div>
+</body>
+</html>
