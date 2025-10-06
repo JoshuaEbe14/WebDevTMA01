@@ -1,0 +1,131 @@
+/* Page title bar */
+.page-title-bar{
+  background: hwb(122 59% 29%);
+  border-radius: 0rem;
+  padding: .5rem .75rem;
+}
+
+/* Title color */
+.page-title-bar h5{
+  color: hsl(140, 9%, 6%) !important;
+}
+
+/* Header strip */
+.header-bar{
+  background-color: hwb(114 73% 5%);
+  border: 1px solid #fbfcfb;
+  border-radius: 0rem;
+  padding: .5rem .75rem;
+}
+
+/* Labels in header */
+.label-green,
+.header-bar label{
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar{
+  background-image: url('https://library.suss.edu.sg/wp-content/uploads/2023/11/Study-Space_High-table-2-cropped-300x200.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: sticky;
+  top: 0;
+  height: 100vh;           /* exact viewport height */
+  overflow: hidden;        /* no internal scrolling */
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* No overlay */
+.sidebar::before { content: none; }
+
+/* Sidebar content above bg */
+.sidebar > div {
+    z-index: 1;
+    position: relative;
+}
+
+/* Sidebar title */
+.sidebar h4{
+  font-weight: 300;          /* thinner */
+  font-size: 1.5rem;         /* keep it readable but light */
+  letter-spacing: .4px;      /* slightly wider feel */
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  padding: .9rem 0;
+  margin-bottom: .75rem;
+  text-align: center;
+}
+
+/* Sidebar link */
+.sidebar .nav-link{
+  font-weight: 300;          /* a touch bolder than the header */
+  font-size: 1.3rem;         /* slightly bigger text */
+  letter-spacing: .9px;      /* a bit wider */
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  justify-content: center;
+  gap: .65rem;               /* more space between icon and text */
+  padding: .9rem 0;
+  color: #fff !important;
+  background: transparent !important;
+  border: none;
+}
+
+/* Sidebar link icon */
+.sidebar .nav-link .fa-solid{
+  font-size: 1.35rem;        /* bump icon size */
+  line-height: 1;
+}
+
+/* Active link */
+.sidebar .active-link{
+  border-left: none;
+  background: transparent;
+  color: #fff !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+}
+
+/* Cards */
+.card{
+  border: none;
+  border-radius: 0rem;
+  box-shadow: 0 6px 18px lab(53.14% 1.51 0.53 / 0.847);
+}
+
+/* Title + author */
+.card-title,
+.card-body > .text-muted {
+  font-size: 1.35rem;
+  color: hsl(210, 5%, 25%) !important;
+  margin-bottom: 0.25rem;
+}
+.card-body > .text-muted {
+  font-weight: normal;
+}
+
+/* 20/80 split (md+) */
+@media (min-width: 768px){
+  .sidebar-col{
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .main-col{
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+}
+
+/* Small screens */
+@media (max-width: 767.98px){
+  .sidebar-col{ display: none; }
+  .main-col{ flex: 0 0 100%; max-width: 100%; }
+}

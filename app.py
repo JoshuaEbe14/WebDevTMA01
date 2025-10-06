@@ -1,25 +1,45 @@
-from flask import Flask, render_template
-from books import all_books # Correctly import the 'all_books' list
+from flask import Flask, render_template, request
+from books import all_books
 
 app = Flask(__name__)
 
+def first_last(paras):
+    paras = [p.strip() for p in paras if p and p.strip()]
+    if not paras:
+        return "", ""
+    return paras[0], (paras[-1] if len(paras) > 1 else "")
+
 @app.route('/')
 def home():
-    # Sort the list of book dictionaries directly by the 'title' key
-    sorted_books = sorted(all_books, key=lambda book: book['title'])
+    # selected category (default: All)
+    selected = (request.args.get('category') or 'All').title()
 
-    # Process the description for each book
-    for book in sorted_books:
-        # The 'description' is a list of strings (paragraphs)
-        description_paragraphs = book['description']
-        
-        # Check if there is more than one paragraph
-        if len(description_paragraphs) > 1:
-            # Create a new key with the first and last paragraphs
-            book['display_description'] = f"{description_paragraphs[0]} ... {description_paragraphs[-1]}"
-        else:
-            # If there's only one paragraph, just use that one
-            book['display_description'] = description_paragraphs[0]
+    # categories for dropdown
+    categories = ['All'] + sorted({(b.get('category') or '').title() for b in all_books if b.get('category')})
 
-    # Pass the processed and sorted list to the template
-    return render_template('home.html', books=sorted_books)
+    # filter by category
+    if selected != 'All':
+        data = [b for b in all_books if (b.get('category') or '').title() == selected]
+    else:
+        data = list(all_books)
+
+    # sort by title
+    data.sort(key=lambda book: book['title'])
+
+    # split description into first/last
+    books = []
+    for b in data:
+        first, last = first_last(b.get('description', []))
+        # display categories: category first, then genres
+        cat = (b.get('category') or '').title()
+        genres = [g.title() for g in b.get('genres', [])]
+        display_categories = ([cat] if cat else []) + [g for g in genres if g != cat]
+        books.append({**b, 'first_paragraph': first, 'last_paragraph': last, 'display_categories': display_categories})
+
+    return render_template(
+        'home.html',
+        books=books,
+        count=len(books),
+        categories=categories,
+        selected_category=selected
+    )
