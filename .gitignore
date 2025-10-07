@@ -5,3 +5,7 @@ __pycache__/
 venv/
 .venv/
 239tma/
+
+# Ignore venvs named tma239 or 239tma anywhere in the tree
+**/tma239/
+**/239tma/
