@@ -43,3 +43,15 @@ def home():
         categories=categories,
         selected_category=selected
     )
+
+@app.route('/book/<string:title>')
+def book_details(title):
+    # Find the book from the 'all_books' list that matches the title
+    book = next((b for b in all_books if b['title'] == title), None)
+    
+    if book:
+        # CORRECTED: Renders the book_details.html template
+        return render_template('book_details.html', book=book)
+    
+    # If no book with that title exists, return a 404 error
+    return "Book not found", 404
