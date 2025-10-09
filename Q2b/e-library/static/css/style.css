@@ -1,0 +1,203 @@
+/* Page title bar */
+.page-title-bar{
+  background: hwb(122 59% 29%);
+  border-radius: 0rem;
+  padding: .5rem .75rem;
+}
+
+/* Title color */
+.page-title-bar h5{
+  color: hsl(140, 9%, 6%) !important;
+}
+
+/* Header strip */
+.header-bar{
+  background-color: hwb(114 73% 5%);
+  border: 1px solid #fbfcfb;
+  border-radius: 0rem;
+  padding: .5rem .75rem;
+}
+
+/* Labels in header */
+.label-green,
+.header-bar label{
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar{
+  background-image: url('https://library.suss.edu.sg/wp-content/uploads/2023/11/Study-Space_High-table-2-cropped-300x200.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: sticky;
+  top: 0;
+  height: 100vh;           /* exact viewport height */
+  overflow: hidden;        /* no internal scrolling */
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Mobile top bar (collapsed shows only background image) */
+/* Mobile collapsed navbar (white bar with hamburger) */
+.mobile-navbar { border-bottom: 1px solid #e5e5e5; }
+
+/* Mobile expanded banner with background image */
+.mobile-banner{
+  background-image: url('https://library.suss.edu.sg/wp-content/uploads/2023/11/Study-Space_High-table-2-cropped-300x200.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+.mobile-banner .banner-inner{ 
+  /* no tint overlay */
+  padding: 20px 16px 24px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* Match sidebar font */
+.mobile-banner h4{
+  color: #fff;
+  font-weight: 300;
+  font-size: 1.5rem;
+  letter-spacing: .4px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+  margin-top: 12px; /* extra gap from top */
+}
+.mobile-banner .banner-divider{
+  width: 80%;
+  border-bottom: 1px solid rgba(255,255,255,.85);
+  margin-bottom: 16px; /* gap to button */
+}
+.mobile-banner .banner-actions{
+  padding-left: 4px;
+  padding-bottom: 8px;
+}
+.mobile-banner-link{ color: #fff !important; font-weight: 300; letter-spacing: .9px; font-size: 1.1rem; text-decoration: none; }
+.mobile-banner-link:hover,
+.mobile-banner-link:focus{ text-decoration: none; color: #fff !important; }
+
+.mobile-banner .mobile-banner-link {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+/* Keep banner height consistent and focus top on small screens */
+.mobile-banner{ min-height: 160px; }
+@media (max-width: 767.98px){
+  .mobile-banner{ background-position: top center; min-height: 200px; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0; }
+  /* Ensure no top margin before green bar and align widths */
+  .page-title-bar{ margin-top: 0 !important; margin-left: 1rem; margin-right: 1rem; border-radius: 0; }
+  .header-bar{ margin-left: 1rem; margin-right: 1rem; }
+}
+
+/* No overlay */
+.sidebar::before { content: none; }
+
+/* Sidebar content above bg */
+.sidebar > div {
+    z-index: 1;
+    position: relative;
+}
+
+/* Sidebar title */
+.sidebar h4{
+  font-weight: 300;          /* thinner */
+  font-size: 1.5rem;         /* keep it readable but light */
+  letter-spacing: .4px;      /* slightly wider feel */
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  padding: .9rem 0;
+  margin-bottom: .75rem;
+  text-align: center;
+}
+
+/* Sidebar link */
+.sidebar .nav-link{
+  font-weight: 300;          /* a touch bolder than the header */
+  font-size: 1.3rem;         /* slightly bigger text */
+  letter-spacing: .9px;      /* a bit wider */
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  justify-content: flex-start;
+  gap: .65rem;               /* more space between icon and text */
+  padding: .9rem 1.5rem;
+  color: #fff !important;
+  background: transparent !important;
+  border: none;
+}
+
+/* Sidebar link icon */
+.sidebar .nav-link .fa-solid{
+  font-size: 1.35rem;        /* bump icon size */
+  line-height: 1;
+}
+
+/* Active link */
+.sidebar .active-link{
+  border-left: none;
+  background: transparent;
+  color: #fff !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+}
+
+/* Cards */
+.card{
+  border: none;
+  border-radius: 0rem;
+  box-shadow: 0 6px 18px lab(53.14% 1.51 0.53 / 0.847);
+}
+
+/* Title + author */
+.card-title,
+.card-body > .text-muted {
+  font-size: 1.35rem;
+  color: hsl(210, 5%, 25%) !important;
+  margin-bottom: 0.25rem;
+}
+.card-body > .text-muted {
+  font-weight: normal;
+}
+
+/* Specific styling for book details page to override global card title sizing
+   and control responsive behaviour of the cover image and description text. */
+.book-details-card { background: #fff; }
+.book-details-card .card-title { font-size: 1.25rem; margin-bottom: .25rem; }
+.book-details-card .card-author { font-size: 1.25rem; color: hsl(210, 5%, 25%); margin-bottom: .25rem; }
+.book-details-card .text-muted { font-size: 1rem; }
+.book-details-card .book-meta { font-size: .95rem; }
+.book-details-card .book-description p { font-size: .95rem; color: #6c757d; }
+
+/* Cover scaling behaviour:
+   - On larger mobile widths (>= 576px) the cover is relatively small and sits left of the info.
+   - Below 480px, the cover grows and the info moves below. */
+.book-cover { max-width: 100%; height: auto; display: block; border-radius: 4px; }
+
+/* 20/80 split (md+) */
+@media (min-width: 768px){
+  /* Small horizontal gap from sidebar on desktop */
+  .page-title-bar{ margin-left: 1rem; margin-right: 1rem; }
+  .sidebar-col{
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .main-col{
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+}
+
+/* Small screens */
+@media (max-width: 767.98px){
+  .sidebar-col{ display: none; }
+  .main-col{ flex: 0 0 100%; max-width: 100%; }
+}
