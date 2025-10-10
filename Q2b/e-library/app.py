@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from models import User
 from auth_controller import auth
 from book_controller import book_bp
+from loan_controller import loan_bp
 
 app = Flask(__name__)
 
@@ -20,6 +21,7 @@ def load_user(user_id):
 
 app.register_blueprint(auth)
 app.register_blueprint(book_bp)
+app.register_blueprint(loan_bp)
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'elibrary',       

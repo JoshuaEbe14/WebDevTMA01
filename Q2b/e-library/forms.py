@@ -15,7 +15,6 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class AuthorForm(Form):
-    # Disable CSRF for nested form used inside FormField
     class Meta:
         csrf = False
 
@@ -28,8 +27,6 @@ class AddBookForm(FlaskForm):
     category = SelectField('Choose a category', choices=[('Children', 'Children'), ('Teens', 'Teens'), ('Adult', 'Adult')], validators=[DataRequired(message='Category is required')])
     url = StringField('URL for Cover', validators=[DataRequired(message='Cover URL is required'), URL(message='Enter a valid URL')])
     description = TextAreaField('Description', validators=[DataRequired(message='Description is required')])
-
-    # Ensure at least one author by default
     authors = FieldList(FormField(AuthorForm), min_entries=1, label='Authors')
     
     pages = IntegerField('Number of pages', validators=[InputRequired(message='Pages is required'), NumberRange(min=1, message='Pages must be at least 1')])

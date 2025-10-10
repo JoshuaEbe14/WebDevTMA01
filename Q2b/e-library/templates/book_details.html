@@ -46,7 +46,14 @@
             </div>
 
             <div class="mt-auto text-end">
-              <a href="{{ url_for('home') }}" class="btn btn-success book-back-btn">Back to Book Titles</a>
+              <a href="{{ url_for('home') }}" class="btn btn-success btn-sm me-2 book-back-btn">Back to Book Titles</a>
+              {% if book.available and book.available > 0 %}
+                <form action="{{ url_for('loan_bp.loan_book', book_id=book.id) }}" method="post" style="display: inline;">
+                  <button type="submit" class="btn btn-success btn-sm">Make a Loan</button>
+                </form>
+              {% else %}
+                <button type="button" class="btn btn-danger btn-sm">Not Available</button>
+              {% endif %}
             </div>
           </div>
         </div>

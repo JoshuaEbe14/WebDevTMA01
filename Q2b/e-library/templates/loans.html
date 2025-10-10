@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}My Loans{% endblock %}
+
+{% block content %}
+<div class="page-title-bar d-flex justify-content-between align-items-center mb-2">
+  <h5 class="mb-0 text-white">CURRENT LOANS</h5>
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('auth.logout') }}" class="text-dark" title="Logout">
+    <i class="fa-solid fa-sign-out-alt fa-lg"></i>
+  </a>
+  {% endif %}
+</div>
+
+<div class="content-inner px-3 px-sm-5">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% if loans %}
+    <div class="table-responsive">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Title/Author</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Return date</th>
+            <th scope="col">Renew Count</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loan in loans %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-start">
+                  <img src="{{ loan.book_id.url }}" class="img-fluid" alt="Cover" style="width: 50px; height: auto; margin-right: 15px;">
+                  <div>
+                    <strong>{{ loan.book_id.title }}</strong>
+                    <br>
+                    <small>By {{ loan.book_id.authors|join(', ') }}</small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                {% set due_date = loan.borrow_date + timedelta(weeks=2) %}
+                {{ due_date.strftime('%d %b %Y') }}
+              </td>
+              <td>{{ loan.return_date.strftime('%d %b %Y') if loan.return_date else '' }}</td>
+              <td>{{ loan.renew_count }}</td>
+              <td>
+                <div class="d-flex">
+                  {% if loan.return_date %}
+                    <form action="{{ url_for('loan_bp.delete_loan', loan_id=loan.id) }}" method="post" class="me-2">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  {% else %}
+                    {% set is_overdue = today > due_date %}
+                    {% if not is_overdue and loan.renew_count < 2 %}
+                      <form action="{{ url_for('loan_bp.renew_loan', loan_id=loan.id) }}" method="post" class="me-2">
+                        <button type="submit" class="btn btn-success btn-sm">Renew</button>
+                      </form>
+                    {% endif %}
+                    <form action="{{ url_for('loan_bp.return_loan', loan_id=loan.id) }}" method="post">
+                      <button type="submit" class="btn btn-success btn-sm">Return</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No loan currently</p>
+  {% endif %}
+</div>
+{% endblock %}
