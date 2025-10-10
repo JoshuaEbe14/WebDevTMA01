@@ -11,12 +11,12 @@ loan_bp = Blueprint('loan_bp', __name__)
 def loan_book(book_id):
     if not isinstance(current_user._get_current_object(), User):
         flash("Please login or register first to get an account", "warning")
-        return redirect(url_for('auth_bp.login'))
+        return redirect(url_for('auth.login'))
 
     book = Book.objects(id=book_id).first()
     if not book:
         flash("Book not found.", "danger")
-        return redirect(url_for('book_bp.home'))
+        return redirect(url_for('home'))
 
     # The application randomly generates a borrow date 10 to 20 days before today’s date
     borrow_date = datetime.datetime.utcnow() - datetime.timedelta(days=random.randint(10, 20))
@@ -32,7 +32,7 @@ def loan_book(book_id):
             flash(f"You already have an unreturned loan for '{book.title}'.", "warning")
 
     # Redirect back to the page the user was on
-    return redirect(request.referrer or url_for('book_bp.home'))
+    return redirect(request.referrer or url_for('home'))
 
 @loan_bp.route('/loans')
 @login_required
