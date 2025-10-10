@@ -201,3 +201,25 @@
   .sidebar-col{ display: none; }
   .main-col{ flex: 0 0 100%; max-width: 100%; }
 }
+
+.user-profile {
+  padding: 1rem 1.5rem; 
+}
+
+.user-profile img {
+  width: 45px;  
+  height: 45px;
+  object-fit: cover; 
+}
+
+.user-profile .user-name {
+  font-size: 1.4rem; 
+  font-weight: 500;   
+  color: #fff;
+}
+
+.sidebar-divider {
+  width: 85%; 
+  margin: 0.75rem auto; 
+  border-top: 1px solid rgba(235, 226, 226, 0.926); 
+}

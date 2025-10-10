@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Add a New Book{% endblock %}
+{% block content %}
+<div class="page-title-bar d-flex justify-content-between align-items-center mb-2">
+  <h5 class="mb-0 text-white">ADD A BOOK</h5>
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('auth.logout') }}" class="text-dark" title="Logout">
+    <i class="fa-solid fa-sign-out-alt fa-lg"></i>
+  </a>
+  {% endif %}
+</div>
+<div class="content-inner px-md-4">
+    <div class="card p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('book.add_book') }}">
+            {{ form.hidden_tag() }}
+
+            <!-- Two-column row for Genres and Description -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.genres.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.genres(class="form-control", size=8) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.description.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.description(class="form-control", rows=8) }}
+                </div>
+            </div>
+
+            <!-- Two-column rows for single fields -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.title.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.title(class="form-control") }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.category.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.category(class="form-select") }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.url.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.url(class="form-control") }}
+                </div>
+            </div>
+            
+            <!-- Authors: numbered rows with Illustrator checkbox and + / - controls (no JS) -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Authors</label>
+                </div>
+                <div class="col-md-9">
+                    {% for subform in form.authors %}
+                      <div class="d-flex align-items-center mb-2">
+                        <label class="me-2 mb-0">Author {{ loop.index }}:</label>
+                        {{ subform.author_name(class="form-control me-3", placeholder="Name", style="max-width: 420px;") }}
+                        <div class="form-check me-2">
+                          {{ subform.is_illustrator(class="form-check-input", id="illustrator_" ~ loop.index0) }}
+                          <label class="form-check-label" for="illustrator_{{ loop.index0 }}">Illustrator</label>
+                        </div>
+                        {% if form.authors|length > 1 %}
+                          <button class="btn btn-outline-danger btn-sm" type="submit" name="remove_author" value="{{ loop.index0 }}" formnovalidate>&minus;</button>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                    <button class="btn btn-outline-success btn-sm mt-2" type="submit" name="add_author" value="1" formnovalidate>+ Add Author</button>
+                </div>
+            </div>
+
+            <!-- Stacked Pages and Copies -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.pages.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.pages(class="form-control") }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    {{ form.copies.label(class="form-label") }}
+                </div>
+                <div class="col-md-9">
+                    {{ form.copies(class="form-control") }}
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                {{ form.submit(class="btn btn-success") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
