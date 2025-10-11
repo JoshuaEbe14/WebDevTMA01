@@ -5,6 +5,7 @@ from models import User
 from auth_controller import auth
 from book_controller import book_bp
 from loan_controller import loan_bp
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
@@ -32,6 +33,40 @@ app.config['MONGODB_SETTINGS'] = {
 db.init_app(app)
 
 Book.init_db()
+
+def seed_default_users():
+  default_users = [
+    {
+      'email': 'admin@lib.sg',
+      'name': 'Admin',
+      'password': '12345',
+      'is_admin': True,
+    },
+    {
+      'email': 'poh@lib.sg',
+      'name': 'Peter Oh',
+      'password': '12345',
+      'is_admin': False,
+    },
+  ]
+
+  seeded = []
+  for data in default_users:
+    if not User.objects(email=data['email']).first():
+      user = User(
+        email=data['email'],
+        name=data['name'],
+        password=generate_password_hash(data['password']),
+        is_admin=data['is_admin']
+      )
+      user.save()
+      seeded.append(data['email'])
+  if seeded:
+    print(f"Seeded users: {', '.join(seeded)}")
+  else:
+    print("The default users are already present.")
+
+seed_default_users()
 
 @app.route('/')
 def home():

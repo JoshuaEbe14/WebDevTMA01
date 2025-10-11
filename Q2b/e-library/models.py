@@ -12,6 +12,7 @@ class User(db.Document, UserMixin):
     name = db.StringField(required=True)
     email = db.StringField(required=True, unique=True)
     password = db.StringField(required=True)
+    is_admin = db.BooleanField(default=False)
 
 
 class Loan(db.Document):
